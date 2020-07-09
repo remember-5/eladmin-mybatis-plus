@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    <!-- <mapping>
+      <class-a>com.baomidou.mybatisplus.extension.plugins.pagination.Page</class-a>
+      <class-b>org.springframework.data.domain.Pageable</class-b>
+      <field>
+        <a>current</a>
+        <b>page</b>
+      </field>
+    </mapping> -->
+    <!-- <mapping>
+      <class-a>com.admin.system.model.UserModel</class-a>
+      <class-b>com.admin.modules.system.service.dto.UserDto</class-b>
+      <field>
+        <a>a.userAvatar.realName</a>
+        <b>b.avatar</b>
+      </field>
+    </mapping> -->
+</mappings>

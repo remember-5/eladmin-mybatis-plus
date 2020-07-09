@@ -1,0 +1,11 @@
+### IDEA ###
+.idea/*
+*.iml
+*/target/*
+*/*.iml
+.settings/
+
+
+
+
+/log/
