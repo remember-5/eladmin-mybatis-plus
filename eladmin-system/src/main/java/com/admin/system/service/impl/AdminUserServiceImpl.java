@@ -54,9 +54,9 @@ import java.util.stream.Collectors;
 /**
  * @author adyfang
  */
-@RequiredArgsConstructor
 @Service
 @CacheConfig(cacheNames = "user")
+@RequiredArgsConstructor
 public class AdminUserServiceImpl extends ServiceImpl<IUserMapper, UserModel> implements IUserService {
     private final Mapper mapper;
     private final RedisUtils redisUtils;
@@ -138,7 +138,7 @@ public class AdminUserServiceImpl extends ServiceImpl<IUserMapper, UserModel> im
     @Override
     @Cacheable(key = "'id:' + #p0")
     @Transactional(rollbackFor = Exception.class)
-    public UserDto findById(long id) {
+    public UserDto findById(Long id) {
         UserModel user = Optional.ofNullable(this.getById(id)).orElseGet(UserModel::new);
         ValidationUtil.isNull(user.getId(), "User", "id", id);
         return mapper.map(user, UserDto.class);
@@ -258,11 +258,11 @@ public class AdminUserServiceImpl extends ServiceImpl<IUserMapper, UserModel> im
         usersRolesService.remove(query);
         this.removeByIds(ids);
 
-        for (Long id : ids) {
+        //for (Long id : ids) {
             // 清理缓存
-            UserDto user = findById(id);
-            delCaches(user.getId(), user.getUsername());
-        }
+        //    UserDto user = findById(id);
+        //    delCaches(user.getId(), user.getUsername());
+        //}
     }
 
     @Override

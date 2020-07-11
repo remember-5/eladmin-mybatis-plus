@@ -18,7 +18,7 @@ package com.admin.config;
 import com.admin.utils.SecurityUtils;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
 import java.sql.Timestamp;
 
@@ -26,7 +26,7 @@ import java.sql.Timestamp;
  * @author adyfang
  * @date 2020年5月2日
  */
-@Component
+@Configuration
 public class FillHandlerConfig implements MetaObjectHandler {
 
     @Override

@@ -38,7 +38,7 @@ public interface IUserService extends IService<UserModel> {
 
     List<UserDto> queryAll(UserQueryCriteria criteria);
 
-    UserDto findById(long id);
+    UserDto findById(Long id);
 
     void create(UserModel resources);
 

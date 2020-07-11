@@ -15,7 +15,7 @@
  */
 package com.admin.config.thread;
 
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -26,7 +26,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Zheng Jie
  * @date 2019年10月31日17:49:55
  */
-@Component
+@Configuration
 public class TheadFactoryName implements ThreadFactory {
 
     private static final AtomicInteger POOL_NUMBER = new AtomicInteger(1);

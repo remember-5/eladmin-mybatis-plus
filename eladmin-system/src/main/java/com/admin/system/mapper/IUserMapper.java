@@ -50,7 +50,7 @@ public interface IUserMapper extends BaseMapper<UserModel> {
     /**
      * 根据角色中的部门查询
      *
-     * @param id /
+     * @param roleId /
      * @return /
      */
     @Select("SELECT u.* FROM sys_user u, sys_users_roles r, sys_roles_depts d WHERE "
@@ -60,7 +60,7 @@ public interface IUserMapper extends BaseMapper<UserModel> {
     /**
      * 根据菜单查询
      *
-     * @param id 菜单ID
+     * @param menuId 菜单ID
      * @return /
      */
     @Select("SELECT u.* FROM sys_user u, sys_users_roles ur, sys_roles_menus rm WHERE"

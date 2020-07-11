@@ -17,7 +17,7 @@ package com.admin.config.thread;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * 线程池配置属性类
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
  * @date 2019年10月31日14:58:18
  */
 @Data
-@Component
+@Configuration
 @ConfigurationProperties(prefix = "task.pool")
 public class AsyncTaskProperties {
 
