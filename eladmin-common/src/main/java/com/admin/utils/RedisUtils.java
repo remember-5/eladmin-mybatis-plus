@@ -15,6 +15,8 @@
  */
 package com.admin.utils;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.connection.RedisConnection;
@@ -214,8 +216,10 @@ public class RedisUtils {
      * @return
      */
     public List<Object> multiGet(List<String> keys) {
-        Object obj = redisTemplate.opsForValue().multiGet(Collections.singleton(keys));
-        return null;
+        List list = redisTemplate.opsForValue().multiGet(Sets.newHashSet(keys));
+        List resultList = Lists.newArrayList();
+        Optional.ofNullable(list).ifPresent(e-> list.forEach(ele-> Optional.ofNullable(ele).ifPresent(resultList::add)));
+        return resultList;
     }
 
     /**
