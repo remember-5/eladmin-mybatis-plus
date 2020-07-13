@@ -52,6 +52,14 @@ public class LoginCode implements Serializable {
      * 验证码高度
      */
     private Integer height = 2;
+    /**
+     * 验证码高度
+     */
+    private String fontName;
+    /**
+     * 验证码高度
+     */
+    private Integer fontSize = 25;
 
 
 }
