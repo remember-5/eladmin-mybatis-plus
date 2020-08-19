@@ -16,7 +16,7 @@
 package com.admin.system.model;
 
 import com.admin.base.BaseModel;
-import com.admin.enums.DataScopeEnum;
+import com.admin.utils.enums.DataScopeEnum;
 import com.admin.utils.AdminFields;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

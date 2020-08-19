@@ -15,8 +15,8 @@
  */
 package com.admin.system.controller;
 
-import com.admin.enums.CodeBiEnum;
-import com.admin.enums.CodeEnum;
+import com.admin.utils.enums.CodeBiEnum;
+import com.admin.utils.enums.CodeEnum;
 import com.admin.system.service.IVerifyService;
 import com.admin.tools.service.IEmailService;
 import com.admin.vo.EmailVo;

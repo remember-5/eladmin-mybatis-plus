@@ -71,7 +71,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 throw new UsernameNotFoundException("");
             } else {
                 if (!user.getEnabled()) {
-                    throw new BadRequestException("账号未激活");
+                    throw new BadRequestException("账号未激活！");
                 }
                 adminJwtUserDto = new AdminJwtUserDto(
                         user,

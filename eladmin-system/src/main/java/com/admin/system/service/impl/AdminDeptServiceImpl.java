@@ -24,10 +24,8 @@ import com.admin.system.mapper.IUserMapper;
 import com.admin.system.model.DeptModel;
 import com.admin.system.model.UserModel;
 import com.admin.system.service.IDeptService;
-import com.admin.utils.DozerUtils;
-import com.admin.utils.FileUtil;
-import com.admin.utils.RedisUtils;
-import com.admin.utils.ValidationUtil;
+import com.admin.utils.*;
+import com.admin.utils.enums.DataScopeEnum;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -66,7 +64,15 @@ public class AdminDeptServiceImpl extends ServiceImpl<IDeptMapper, DeptModel> im
 
     @Override
     public List<DeptDto> queryAll(DeptQueryCriteria criteria, Boolean isQuery) throws Exception {
+        String dataScopeType = SecurityUtils.getDataScopeType();
+        if(dataScopeType.equals(DataScopeEnum.ALL.getValue())){
+            criteria.setPidIsNull(true);
+        }
         List<DeptDto> list = DozerUtils.mapList(mapper, this.list(buildWrapper(criteria, isQuery)), DeptDto.class);
+        // 如果为空，就代表为自定义权限或者本级权限，就需要去重，不理解可以注释掉，看查询结果
+        if(StringUtils.isBlank(dataScopeType)){
+            return deduplication(list);
+        }
         return list;
     }
 
@@ -308,4 +314,23 @@ public class AdminDeptServiceImpl extends ServiceImpl<IDeptMapper, DeptModel> im
         redisUtils.del("dept::pid:" + (oldPid == null ? 0 : oldPid));
         redisUtils.del("dept::pid:" + (newPid == null ? 0 : newPid));
     }
+
+
+    private List<DeptDto> deduplication(List<DeptDto> list) {
+        List<DeptDto> deptDtos = new ArrayList<>();
+        for (DeptDto deptDto : list) {
+            boolean flag = true;
+            for (DeptDto dto : list) {
+                if (deptDto.getPid()!= null && deptDto.getPid().equals(dto.getId())) {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag){
+                deptDtos.add(deptDto);
+            }
+        }
+        return deptDtos;
+    }
+
 }

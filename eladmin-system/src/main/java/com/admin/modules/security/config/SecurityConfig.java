@@ -17,7 +17,7 @@ package com.admin.modules.security.config;
 
 import com.admin.annotation.AnonymousAccess;
 import com.admin.config.SecurityProperties;
-import com.admin.enums.RequestMethodEnum;
+import com.admin.utils.enums.RequestMethodEnum;
 import com.admin.modules.security.security.JwtAccessDeniedHandler;
 import com.admin.modules.security.security.JwtAuthenticationEntryPoint;
 import com.admin.modules.security.security.TokenConfigurer;

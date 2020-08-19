@@ -17,7 +17,7 @@ package com.admin.system.controller;
 
 import com.admin.annotation.Log;
 import com.admin.config.RsaProperties;
-import com.admin.enums.CodeEnum;
+import com.admin.utils.enums.CodeEnum;
 import com.admin.exception.BadRequestException;
 import com.admin.modules.system.domain.vo.UserPassVo;
 import com.admin.modules.system.service.dto.RoleSmallDto;

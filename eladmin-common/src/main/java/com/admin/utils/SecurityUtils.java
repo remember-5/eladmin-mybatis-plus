@@ -19,6 +19,7 @@ import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.admin.exception.BadRequestException;
+import com.admin.utils.enums.DataScopeEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -88,5 +89,17 @@ public class SecurityUtils {
         UserDetails userDetails = getCurrentUser();
         JSONArray array = JSONUtil.parseArray(new JSONObject(userDetails).get("dataScopes"));
         return JSONUtil.toList(array, Long.class);
+    }
+
+    /**
+     * 获取数据权限级别
+     * @return 级别
+     */
+    public static String getDataScopeType() {
+        List<Long> dataScopes = getCurrentUserDataScope();
+        if(dataScopes.size() != 0){
+            return "";
+        }
+        return DataScopeEnum.ALL.getValue();
     }
 }

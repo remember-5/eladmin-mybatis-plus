@@ -15,7 +15,7 @@
  */
 package com.admin.system.service.impl;
 
-import com.admin.enums.DataScopeEnum;
+import com.admin.utils.enums.DataScopeEnum;
 import com.admin.modules.system.service.dto.RoleSmallDto;
 import com.admin.modules.system.service.dto.UserDto;
 import com.admin.system.model.DeptModel;
@@ -59,6 +59,8 @@ public class AdminDataServiceImpl implements IDataService {
                 case CUSTOMIZE:
                     deptIds.addAll(getCustomize(deptIds, role));
                     break;
+                default:
+                    return new ArrayList<>(deptIds);
             }
         }
         return new ArrayList<>(deptIds);

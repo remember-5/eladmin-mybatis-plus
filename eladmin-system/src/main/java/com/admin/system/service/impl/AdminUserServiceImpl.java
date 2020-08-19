@@ -1,4 +1,4 @@
-/*
+    /*
  *  Copyright 2019-2020 Fang Jin Biao
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,41 +15,42 @@
  */
 package com.admin.system.service.impl;
 
-import com.admin.config.FileProperties;
-import com.admin.exception.EntityExistException;
-import com.admin.exception.EntityNotFoundException;
-import com.admin.modules.system.service.dto.*;
-import com.admin.system.mapper.IUserMapper;
-import com.admin.system.mapper.IUsersJobsMapper;
-import com.admin.system.model.*;
-import com.admin.system.security.service.UserCacheClean;
-import com.admin.system.service.IDeptService;
-import com.admin.system.service.IJobService;
-import com.admin.system.service.IUserService;
-import com.admin.system.service.IUsersRolesService;
-import com.admin.utils.*;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import lombok.RequiredArgsConstructor;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.dozer.Mapper;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
+    import com.admin.config.FileProperties;
+    import com.admin.exception.EntityExistException;
+    import com.admin.exception.EntityNotFoundException;
+    import com.admin.modules.system.service.dto.*;
+    import com.admin.system.mapper.IUserMapper;
+    import com.admin.system.mapper.IUsersJobsMapper;
+    import com.admin.system.model.*;
+    import com.admin.system.security.service.AdminOnlineUserService;
+    import com.admin.system.security.service.UserCacheClean;
+    import com.admin.system.service.IDeptService;
+    import com.admin.system.service.IJobService;
+    import com.admin.system.service.IUserService;
+    import com.admin.system.service.IUsersRolesService;
+    import com.admin.utils.*;
+    import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+    import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+    import com.baomidou.mybatisplus.core.metadata.IPage;
+    import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+    import lombok.RequiredArgsConstructor;
+    import org.apache.commons.collections4.CollectionUtils;
+    import org.apache.commons.lang3.StringUtils;
+    import org.dozer.Mapper;
+    import org.springframework.cache.annotation.CacheConfig;
+    import org.springframework.cache.annotation.Cacheable;
+    import org.springframework.stereotype.Service;
+    import org.springframework.transaction.annotation.Transactional;
+    import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.NotBlank;
-import java.io.File;
-import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+    import javax.servlet.http.HttpServletResponse;
+    import javax.validation.constraints.NotBlank;
+    import java.io.File;
+    import java.io.IOException;
+    import java.sql.Timestamp;
+    import java.util.*;
+    import java.util.function.Function;
+    import java.util.stream.Collectors;
 
 /**
  * @author adyfang
@@ -66,6 +67,7 @@ public class AdminUserServiceImpl extends ServiceImpl<IUserMapper, UserModel> im
     private final IUsersRolesService usersRolesService;
     private final IUsersJobsMapper usersJobsMapper;
     private final UserCacheClean userCacheClean;
+    private final AdminOnlineUserService onlineUserService;
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
@@ -210,6 +212,11 @@ public class AdminUserServiceImpl extends ServiceImpl<IUserMapper, UserModel> im
         // 如果用户名称修改
         if (!resources.getUsername().equals(user.getUsername())) {
             redisUtils.del("user::username:" + user.getUsername());
+        }
+
+        // 如果用户被禁用，则清除用户登录信息
+        if(!resources.getEnabled()){
+            onlineUserService.kickOutForUsername(resources.getUsername());
         }
 
         if (CollectionUtils.isNotEmpty(resources.getRoles())) {

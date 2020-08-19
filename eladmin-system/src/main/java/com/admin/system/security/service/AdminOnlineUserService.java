@@ -22,6 +22,7 @@ import com.admin.utils.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -174,6 +175,20 @@ public class AdminOnlineUserService {
                 } catch (Exception e) {
                     log.error("checkUser is error", e);
                 }
+            }
+        }
+    }
+
+    /**
+     * 根据用户名强退用户
+     * @param username /
+     */
+    @Async
+    public void kickOutForUsername(String username) {
+        List<OnlineUserDto> onlineUsers = getAll(username);
+        for (OnlineUserDto onlineUser : onlineUsers) {
+            if (onlineUser.getUserName().equals(username)) {
+                kickOut(onlineUser.getKey());
             }
         }
     }
