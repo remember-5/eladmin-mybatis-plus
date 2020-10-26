@@ -21,6 +21,7 @@ import com.admin.annotation.Log;
 import com.admin.annotation.rest.AnonymousDeleteMapping;
 import com.admin.annotation.rest.AnonymousGetMapping;
 import com.admin.annotation.rest.AnonymousPostMapping;
+import com.admin.config.LoginCodeEnum;
 import com.admin.config.LoginProperties;
 import com.admin.config.RsaProperties;
 import com.admin.config.SecurityProperties;
@@ -132,8 +133,13 @@ public class AuthController {
         // 获取运算的结果
         Captcha captcha = captchaService.getCaptcha();
         String uuid = properties.getCodeKey() + IdUtil.simpleUUID();
+        //当验证码类型为 arithmetic时且长度 >= 2 时，captcha.text()的结果有几率为浮点型
+        String captchaValue = captcha.text();
+        if (captcha.getCharType() - 1 == LoginCodeEnum.arithmetic.ordinal() && captchaValue.contains(".")) {
+            captchaValue = captchaValue.split("\\.")[0];
+        }
         // 保存
-        redisUtils.set(uuid, captcha.text(), loginProperties.getLoginCode().getExpiration(), TimeUnit.MINUTES);
+        redisUtils.set(uuid, captchaValue, loginProperties.getLoginCode().getExpiration(), TimeUnit.MINUTES);
         // 验证码信息
         Map<String, Object> imgResult = new HashMap<String, Object>(2) {
             {

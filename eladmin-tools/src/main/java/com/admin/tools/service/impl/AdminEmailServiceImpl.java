@@ -62,7 +62,7 @@ public class AdminEmailServiceImpl extends ServiceImpl<IEmailConfigMapper, Email
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void send(EmailVo emailVo, EmailConfigModel emailConfig) {
-        if (emailConfig == null) {
+        if (emailConfig.getId() == null) {
             throw new BadRequestException("请先配置，再操作");
         }
         // 封装

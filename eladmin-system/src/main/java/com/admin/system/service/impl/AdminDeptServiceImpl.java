@@ -321,7 +321,7 @@ public class AdminDeptServiceImpl extends ServiceImpl<IDeptMapper, DeptModel> im
         for (DeptDto deptDto : list) {
             boolean flag = true;
             for (DeptDto dto : list) {
-                if (deptDto.getPid()!= null && deptDto.getPid().equals(dto.getId())) {
+                if (dto.getId().equals(deptDto.getPid())) {
                     flag = false;
                     break;
                 }
