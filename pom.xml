@@ -31,7 +31,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <swagger.version>2.9.2</swagger.version>
-        <fastjson.version>1.2.73</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <druid.version>1.1.22</druid.version>
         <mapstruct.version>1.3.1.Final</mapstruct.version>
         <ip2region.version>1.7.2</ip2region.version>
